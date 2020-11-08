@@ -1,0 +1,115 @@
+Q1:Append current date to all log file
+Answer:
+step 1: touch abc.log.1 def.log.1 ghi.log.1 jkl.log.1 mno.log.1
+step 2(output): abc-22-08-2020.log ghi-22-08-2020.log mno-22-08-2020.log
+def-22-08-2020.log jkl-22-08-2020.log
+
+#!/bin/bash
+for files in `ls *.log.1`
+do
+  firstname=`echo $i | awk -F. '{print$1}'`
+  extension=`echo $i | awk -F. '{print$2}'`
+  date=`date "+%d-%m-%Y"`
+  filename=$firstname"-"$date"."$extension
+  touch $filename
+  mv $files $filename
+done
+
+Q2:Check if folder exists or not if not present,create it
+
+#!/bin/bash -x
+read -p "enter foldername:" foldername
+ if [ -d $foldername ]
+ then
+  echo "folder already exist"
+ else
+  mkdir $foldername
+ fi
+
+Q3:DATA ANALYSIS/MANIPULATION(AWK)
+Answers:
+1. $ cat data.csv | awk '{if($4>10000) print $2"\t"$7}'
+2. $ cat data.csv | grep -i cap* | awk '{s+=$7} END{print s/NR}'
+3. $ cat data.csv | awk '{ if($5>7000 && $5<10000) print$3" "$5}'
+4. $ cat data.csv | awk '{s+=$4} END{print s/(NR-1)}'
+
+Q4:Set env usersecret='dH34xjaa23' if its already not set
+
+#!/bin/bash -x
+if [ -z $usersecret ]
+then
+ export usersecret=dH34xjaa23
+else echo "already exist"
+fi
+
+Q5:Move files from one folder to respective folders
+file-touch a.txt b.txt c.txt d.txt
+
+#!/bin/bash -x
+for i in `ls *.txt`
+do
+  foldername=`echo $i | awk -F. '{print$1}'`
+if [ -d $foldername ]
+then
+   rm -r $foldername
+fi
+  mkdir $foldername
+  cp $i $foldername
+done
+
+
+Q6 Execution status of hello and ls
+
+#!/bin/bash -x
+
+read -p "enter cmd:" cmd
+$cmd
+a=$?
+        if [ $a -eq 0 ]
+        then
+          echo $cmd" cmd exist"
+        else
+          echo $cmd" cmd not exist"
+        fi
+
+Q.7 Create a process list table displays memory consumption
+
+step 1 : top -n 10 -b > top.txt
+step 2 : cat top.txt | head -15
+
+PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+ 3464 adi       20   0    7964   3452   3060 R  12.5  0.2   0:00.02 top
+    1 root      20   0   24012   4976   3788 S   0.0  0.2   0:04.10 systemd
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kthreadd
+    4 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 kworker/0:0H
+    6 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 mm_percpu_wq
+    7 root      20   0       0      0      0 S   0.0  0.0   0:00.04 ksoftirqd/0
+    8 root      20   0       0      0      0 I   0.0  0.0   0:01.42 rcu_sched
+    9 root      20   0       0      0      0 I   0.0  0.0   0:00.00 rcu_bh
+
+
+Q8. Archive the files from /var/log which have modified 7 days ago
+find /var/log -type f -mtime +7 -ls
+
+Q9.Print 4 last frequently accesed urls count in sorted order
+cat access.log | awk '{print$7}'| sort | uniq -c | sort -nr | head -4
+
+Q10.Print 4 last frequently accesed urls count at particular hours
+cat access.log | awk -F: '{print$2}' | sort | uniq -c | sort -k1nr | head -4
+
+Q11. Print list of web Response code count in unique sorted order
+cat access.log | awk '{print $9}' | sort -n | uniq -c
+
+Q12 Print list of 10 unique sorted client ip
+cat access.log | awk '{print $NF}'| sort -n | uniq -c | head -10
+ 
+Q13.find word system from access.log and print the count
+cat access.log | grep -c system
+
+
+
+
+
+
+
+
