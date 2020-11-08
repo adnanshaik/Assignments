@@ -1,0 +1,176 @@
+Q1.Writ e progrman in the following steps:
+a)roll a die and find the numbers between 1 to 6
+b)repeat the die roll find the reult each time
+c)store the result each time
+d)repeat until it reachs 10 times
+e)find max and min.
+
+declare -A dict
+a=0 b=0 c=0 d=0 e=0 f=0
+k=1
+until [ $a -eq 10 ] || [ $b -eq 10 ] || [ $c -eq 10 ] || [ $d -eq 10 ] || [ $e -eq 10 ] || [ $f -eq 10 ]
+do
+random=$(( RANDOM%6+1 ))
+dict[$random]=$random
+
+if [ $random -eq 1 ]
+then
+        ((a++))
+elif [ $random -eq 2 ]
+then
+        ((b++))
+elif [ $random -eq 3 ]
+then
+        ((c++))
+elif [ $random -eq 4 ]
+then
+        ((d++))
+elif [ $random -eq 5 ]
+then
+        ((e++))
+elif [ $random -eq 6 ]
+then
+        ((f++))
+fi
+done
+
+for i in $a $b $c $d $e $f
+do
+        arr[$k]=$i
+        ((k++))
+done
+
+echo ${arr[@]}
+max=${arr[1]}
+min=${arr[1]}
+
+for ((j=1;j<=${#arr[@]};j++))
+do
+        if [ ${arr[j]} -gt $max  ]
+        then
+          max=${arr[j]}
+          maxkey=$j
+        elif [ ${arr[j]} -lt $min ]
+        then
+          min=${arr[j]}
+          minkey=$j
+        fi
+done
+
+echo $maxkey $minkey
+
+for k in ${!dict[@]}
+do
+        echo $k=${arr[$k]}
+done
+
+echo $maxkey" is max="$max "and"  $minkey" is min="$min
+
+output:
+5 4 8 3 7 10
+6 4
+1=5
+2=4
+3=8
+4=3
+5=7
+6=10
+6 is max=10 and 4 is min=3
+
+
+Q2.Write a program to generate a birth month of 50 individuals between 92 and 93.find all the individuals having birthdays in the same month.
+
+
+declare -A dict
+x=1
+for years in {1..50}
+do
+random=$((RANDOM%12+1))
+dict[$random]=$random
+
+if [ $random -eq 1 ]
+then
+        ((a++))
+elif [ $random -eq 2 ]
+then
+        ((b++))
+elif [ $random -eq 3 ]
+then
+        ((c++))
+elif [ $random -eq 4 ]
+then
+        ((d++))
+elif [ $random -eq 5 ]
+then
+        ((e++))
+elif [ $random -eq 6 ]
+then
+        ((f++))
+elif [ $random -eq 7 ]
+then
+        ((g++))
+elif [ $random -eq 8 ]
+then
+        ((h++))
+elif [ $random -eq 9 ]
+then
+        ((i++))
+elif [ $random -eq 10 ]
+then
+        ((j++))
+elif [ $random -eq 11 ]
+then
+        ((k++))
+elif [ $random -eq 12 ]
+then
+        ((l++))
+fi
+done
+
+echo ${dict[@]}
+for months in  $a $b $c $d $e $f $g $h $i $j $k $l 
+do
+        echo "month "$x"=" $months
+        ((x++))
+done
+
+
+
+
+output:
+
+month 1= 6
+month 2= 2
+month 3= 3
+month 4= 3
+month 5= 6
+month 6= 4
+month 7= 2
+month 8= 6
+month 9= 7
+month 10= 6
+month 11= 4
+month 12= 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
